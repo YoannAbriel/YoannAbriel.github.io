@@ -10,14 +10,14 @@
 </head>
 
 <body>
-	<h1 id="hdp">TP : Création d'une page personnelle</h1>
+	<h1 id="hdp">TP : CrÃ©ation d'une page personnelle</h1>
 	
-	<h2>Présentation :</h2>	
+	<h2>PrÃ©sentation :</h2>	
      
     <img src="https://img.gameswelt.de/public/images/201610/cce73a2796ccc6920c2f7ad920c24aa2.jpg" alt="Star citizen :D"
             width="512*2"
             height="288*2">
-    <h3>Site personnel de Yoann lycéen en 1ere avec pour spécialité NSI Mathématique et physique-chimie<h3>
+    <h3>Site personnel de Yoann lycÃ©en en 1ere avec pour spÃ©cialitÃ© NSI MathÃ©matique et physique-chimie<h3>
   </body>
 
 	<p>
@@ -29,6 +29,52 @@
         <h2>Liens pratiques:</h2>
         <ul>
             <li><a href="#hdp">Retour haut de page(ne fonctione absolument pas)</a></li>
+		<?php
+/*
+   Download Logger and Counter
+   Version 1.0
+   November 11, 2019
+   Will Bontrager Software LLC
+   https://www.willmaster.com/
+*/
+
+/* *** Customizations *** */
+// 3 places to customize:
+
+// Place 1:
+// The URL of the downloadable file.
+$URLofDownloadableFile = "/downloads/thedoc.zip";
+
+// Place 2:
+// Optionally, the location of the download log CSV file. Otherwise, leave blank.
+$LocationOfLogFile = "/downloads/log/log.csv";
+
+// Place 3:
+// Optionally, the location of the download count file. Otherwise, leave blank.
+$LocationOfCountFile = "/downloads/log/count.txt";
+
+/* *** End of Customizations *** */
+
+if( (!empty($LocationOfCountFile)) and strlen($LocationOfCountFile)>2 )
+{
+   if( strpos($LocationOfCountFile,'/')===0 ) { $LocationOfCountFile = "{$_SERVER['DOCUMENT_ROOT']}$LocationOfCountFile"; }
+   file_put_contents($LocationOfCountFile,'x',FILE_APPEND);
+}
+if( (!empty($LocationOfLogFile)) and strlen($LocationOfLogFile)>2 )
+{
+
+   if( strpos($LocationOfLogFile,'/')===0 ) { $LocationOfLogFile = "{$_SERVER['DOCUMENT_ROOT']}$LocationOfLogFile"; }
+   $LogCell = array();
+   $LogCell[] = date('r');
+   $LogCell[] = $_SERVER['REMOTE_ADDR'];
+   $LogCell[] = str_replace('"','""',$URLofDownloadableFile);
+   $LogCell[] = str_replace('"','""',$_SERVER['HTTP_USER_AGENT']);
+   file_put_contents($LocationOfLogFile,'"'.implode('","',$LogCell)."\"\n",FILE_APPEND);
+   $filehandle = fopen($LocationOfLogFile,'a');
+}
+?>
+<meta http-equiv="refresh" content="0; url=<?php echo($URLofDownloadableFile) ?>">
+	      
             <li><a href="projet.html">Projet</a></li>
         </ul>
     </footer>
